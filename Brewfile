@@ -9,8 +9,10 @@ brew "tree-sitter-cli"
 brew "ripgrep"
 cask "font-hack-nerd-font" # optional: for nice icons in TUI, apparently
 
-# GOATed Open Source Terminal App
-cask "ghostty"
+# other useful development stuff
+cask "ghostty" # GOATed Open Source Terminal App
+brew "tmux" # terminal multiplexer (allows creating multiple terminal sessions, each with their own panes/windows with the possibility to _detach_ from them (keeping them running in the background for 'rejoining' later if needed)
+brew "mprocs" # tool for running multiple specific _processes_ in parallel and switching between them via a nice TUI; setup persistable via .yaml (e.g. for local dev setup w/ separate backend + frontend processes)
 
 # Node/TS/JS development
 brew "pnpm" # better/faster/safer alternative to npm
