@@ -7,7 +7,5 @@ defaults write com.apple.dock autohide-time-modifier -float 0.4 # speed up slide
 defaults write -g KeyRepeat -int 2 # == Key repeat rate: Fast
 defaults write -g InitialKeyRepeat -int 15 # == Delay until repeat: Short
 
-read -r -p "Applying keyboard settings requires logging out. Do it now? [y/N] " confirm
-if [[ "$confirm" =~ ^[Yy]$ ]]; then
-  osascript -e 'tell application "System Events" to log out'
-fi
+# no way to 'refresh' keyboard settings via CLI :( - there's only `killall Dock` for the Dock...
+echo "Settings applied. Log out and back in (Shift+Cmd+Q) for them to take effect."
