@@ -15,3 +15,6 @@ cask "ghostty"
 # Node/TS/JS development
 brew "pnpm" # better/faster/safer alternative to npm
 brew "fnm" # fast Node version manager; use to _actually_ install Node as well!
+
+# Python development
+brew "uv" # better/faster than the old 'default' way of using pip, venv and poetry
