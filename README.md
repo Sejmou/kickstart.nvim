@@ -75,14 +75,12 @@ it's recommended to track it in version control (see `:help vim.pack-lockfile`).
 
 #### Clone kickstart.nvim
 
-> [!NOTE]
-> If following the recommended step above (i.e., forking the repo), replace
-> `nvim-lua` with `<your_github_username>` in the commands below
+> **NOTE:** This used to refer to the `nvim-lua` repo; updated it to point to this repo
 
 <details><summary> Linux and Mac </summary>
 
 ```sh
-git clone https://github.com/nvim-lua/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
+git clone https://github.com/Sejmou/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
 ```
 
 </details>
@@ -92,13 +90,13 @@ git clone https://github.com/nvim-lua/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HO
 If you're using `cmd.exe`:
 
 ```
-git clone https://github.com/nvim-lua/kickstart.nvim.git "%localappdata%\nvim"
+git clone https://github.com/Sejmou/kickstart.nvim.git "%localappdata%\nvim"
 ```
 
 If you're using `powershell.exe`
 
 ```
-git clone https://github.com/nvim-lua/kickstart.nvim.git "${env:LOCALAPPDATA}\nvim"
+git clone https://github.com/Sejmou/kickstart.nvim.git "${env:LOCALAPPDATA}\nvim"
 ```
 
 </details>
@@ -233,9 +231,28 @@ sudo apt install make gcc ripgrep fd-find tree-sitter-cli unzip git xclip neovim
 <details><summary>Ubuntu Install Steps</summary>
 
 ```
+# default package archives for Ubuntu point to some ancient version of nvim -> need to add PPA
+# NOTE: kickstart-nvim already referenced this unstable ppa, don't ask me why, it actually sounds stupid, but I can't learn ALL the stuff, life's too short
 sudo add-apt-repository ppa:neovim-ppa/unstable -y
 sudo apt update
-sudo apt install make gcc ripgrep fd-find tree-sitter-cli unzip git xclip neovim
+
+# the latest version of `treesitter-cli` from the package archives is _also_ too old and there seems to be no up-to-date PPA
+# -> we have to use a different channel (npm install, cargo binstall, or fetching and linking GitHub binary release for correct architecture manually)
+# you'd also need to make sure to have a version that is compatible with all of the rest of the setup (kickstart-nvim unfortunately didn't come with lockfiles or anything like that...)
+# as of 2026-07-17, v0.26.11 seemed to work with the rest
+# tree-sitter is a Rust project, so cargo binstall is probably the way with the least friction - more info: https://github.com/cargo-bins/cargo-binstall 
+# run install script for cargo binstall
+curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
+# install latest version of treesitter-cli
+cargo-binstall tree-sitter-cli
+# in case you already have recent versions of the Rust toolchain (cargo and rustc), you can ofc also build from source
+cargo install --locked treesitter-cli
+
+# alternatively, if you already work in the Node ecosystem anyway, you can also do a global install with npm (or pnpm, which I'd strongly suggest using as a faster + safer drop-in replacement)
+# npm i -g tree-sitter-cli
+
+# install remaining deps via apt (_should_ just work; neovim uses PPA we configured before)
+sudo apt install make gcc ripgrep fd-find unzip git xclip neovim
 ```
 </details>
 <details><summary>Debian Install Steps</summary>
