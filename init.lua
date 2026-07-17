@@ -118,6 +118,20 @@ do
   -- Don't show the mode, since it's already in the status line
   vim.o.showmode = false
 
+  -- use Neovim's built-in OSC 52 clipboard provider in SSH sessions.
+  -- this allows us to forward stuff in the clipboard register to the _local_ clipboard
+  -- IIUC, this is also necessary to make inserting data from the local clipboard via ctrl/cmd + v work
+  -- NOTE: via OSC52, nvim in the remote SSH session can also _pull_ stuff from the local clipboard
+  -- this _may_ be dangerous as an infected SSH machine could try stealing passwords etc. we have stored in the (local!) clipboard this way
+  -- however, ghostty has nice guardrails for this; with the default config you will always be prompted whether you _actually_ want to share the current content of the clipboard via a pop-up dialog
+  --
+  -- this the full chain of events when yanking selected text to the clipboard register via `"+y` from nvim in a SSH session while using ghostty on macOS locally:
+  -- "+y → + register → OSC 52 → Ghostty → macOS clipboard
+  -- See also `:help clipboard-osc52`
+  if vim.env.SSH_TTY then
+    vim.g.clipboard = 'osc52'
+  end
+
   -- Sync clipboard between OS and Neovim.
   --  Schedule the setting after `UiEnter` because it can increase startup-time.
   --  Remove this option if you want your OS clipboard to remain independent.
