@@ -246,7 +246,7 @@ curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-
 # install latest version of treesitter-cli
 cargo-binstall tree-sitter-cli
 # in case you already have recent versions of the Rust toolchain (cargo and rustc), you can ofc also build from source
-cargo install --locked treesitter-cli
+# cargo install --locked treesitter-cli
 
 # alternatively, if you already work in the Node ecosystem anyway, you can also do a global install with npm (or pnpm, which I'd strongly suggest using as a faster + safer drop-in replacement)
 # npm i -g tree-sitter-cli
